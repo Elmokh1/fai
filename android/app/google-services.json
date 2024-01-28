@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "326905524604",
+    "project_id": "fai-falco",
+    "storage_bucket": "fai-falco.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326905524604:android:ae95ff78f96b0eff9934f9",
+        "android_client_info": {
+          "package_name": "com.example.fai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPYzl0D6Ts97J5LG8y6hC8VM2Oi74e2zY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
