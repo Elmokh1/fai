@@ -1,4 +1,7 @@
 import 'package:fai/import.dart';
+
+import '../main_page/main_page.dart';
+import 'Done/done_tasks.dart';
 class HomeScreen extends StatefulWidget {
   static const routeName = "HomeScreen";
 
@@ -14,20 +17,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: tabs[selectedIndex],
       appBar:AppBar(
-        actions: [
-          InkWell(
-            child: Icon(Icons.logout,color: Colors.black,size: 30,),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-            },
-          ),
-
-        ],
         leading: InkWell(
-          onTap: (){
-            Navigator.pushReplacementNamed(context, Product.routeName);
+          onTap: () {
+            Navigator.pushReplacementNamed(context, MainPage.routeName);
           },
-            child: Icon(Icons.production_quantity_limits_rounded,size: 30,color: Colors.black,)),
+          child: Icon(
+            Icons.arrow_back,
+            size: 30,
+            color: Colors.black,
+          ),
+        ),
+
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -35,7 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
           side: BorderSide(width: 4, color: Colors.white),
         ),
         onPressed: () {
-          showAddTaskSheet();
+          // showAddTaskSheet();
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewTask(),));
         },
         child: const Icon(
           Icons.add,
@@ -61,22 +62,22 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  void showAddTaskSheet() {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (context) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
-            child: AddTaskBottomSheet(),
-          ),
-        );
-      },
-    );
-  }
+  // void showAddTaskSheet() {
+  //   showModalBottomSheet(
+  //     isScrollControlled: true,
+  //     context: context,
+  //     builder: (context) {
+  //       return SingleChildScrollView(
+  //         child: Container(
+  //           padding: EdgeInsets.only(
+  //             bottom: MediaQuery.of(context).viewInsets.bottom,
+  //           ),
+  //           child: AddTaskBottomSheet(),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   var tabs = [
     TodoList(),

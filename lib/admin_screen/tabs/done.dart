@@ -10,12 +10,10 @@ import '../../database/model/target_model.dart';
 import '../../database/model/task_model.dart';
 import '../../database/model/user_model.dart';
 import '../../database/my_database.dart';
-import '../../map/map.dart';
-import '../../provider/Auth_provider.dart';
 import '../../ui/HomeScreen/todos_list/task_item.dart';
 
 class ReportDone extends StatefulWidget {
-  User user;
+  UserModel user;
 
   ReportDone(this.user);
 
@@ -51,9 +49,9 @@ class _NotDoneState extends State<ReportDone> {
           ),
           InkWell(
             onDoubleTap: () async {
-              setState((){});
-              await MyDataBase.deleteTarget(widget.user.id??"");
-              await MyDataBase.deleteIncome(widget.user.id??"");
+              setState(() {});
+              await MyDataBase.deleteTarget(widget.user.id ?? "");
+              await MyDataBase.deleteIncome(widget.user.id ?? "");
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),

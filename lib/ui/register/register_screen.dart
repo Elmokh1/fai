@@ -1,6 +1,8 @@
 import 'package:fai/import.dart';
 import 'package:fai/database/model/user_model.dart' as MyUser;
 
+import '../main_page/main_page.dart';
+
 
 class RegisterScreen extends StatefulWidget {
   static const String routeName = "Register";
@@ -144,7 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     try {
 
       var result = await authService.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
-      var myUser = MyUser.User(
+      var myUser = MyUser.UserModel(
         name: nameController.text,
         email: emailController.text,
         id: result.user?.uid,
@@ -158,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "User Register Successfully",
         posActionName: "ok",
         posAction: () {
-          Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+          Navigator.pushReplacementNamed(context, MainPage.routeName);
         },
         dismissible: false,
       );

@@ -1,11 +1,8 @@
+import 'package:fai/admin_screen/incom_target/compare_page.dart';
 import 'package:fai/import.dart';
 import 'package:fai/database/model/user_model.dart' as MyUser;
 
-
-
 class IncomeScreen extends StatelessWidget {
-  final List<int> sort = [5, 4, 3, 0, 1, 7,2,6,8,9,10,11,12,13,14,15,16,17,18,19,20];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +10,7 @@ class IncomeScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<QuerySnapshot<MyUser.User>>(
+            child: StreamBuilder<QuerySnapshot<MyUser.UserModel>>(
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Text(snapshot.error.toString());
@@ -23,8 +20,7 @@ class IncomeScreen extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   );
                 }
-                var userList =
-                snapshot.data?.docs.map((doc) => doc.data()).toList();
+                var userList = snapshot.data?.docs.map((doc) => doc.data()).toList();
                 if (userList?.isEmpty == true) {
                   return Center(
                     child: Text(
@@ -37,16 +33,27 @@ class IncomeScreen extends StatelessWidget {
                 }
                 return ListView.builder(
                   itemBuilder: (context, index) {
-                    final user = userList;
-                    return IncomeItem(user: user);
+                    final singleUser = userList?[2];
+                    return InkWell(
+                      onTap: () {
+                        print(singleUser?.name);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ComparePage(user: singleUser!),
+                          ),
+                        );
+                      },
+                      child: IncomeItem(user: singleUser),
+                    );
                   },
-                  itemCount: 1,
+                  itemCount: userList?.length ?? 0,
                 );
               },
               stream: MyDataBase.getUserRealTimeUpdate(),
             ),
           ),
-          Text("Total Income"),
         ],
       ),
     );

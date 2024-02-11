@@ -1,15 +1,11 @@
 // import 'dart:io';
-//
 // import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-//
 // import 'api/api_manger.dart';
 // import 'api/notification_model.dart';
-//
 // Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 //   print("Handling a background message: ${message.messageId}");
 // }
-//
 // class FcmHelper {
 //   FirebaseMessaging messaging = FirebaseMessaging.instance;
 //   AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -21,7 +17,6 @@
 //   );
 //   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 //       FlutterLocalNotificationsPlugin();
-//
 //   Future<void> initFcmMessage() async {
 //     await requestPermissionForIos();
 //     await getDeviceToken();
@@ -101,14 +96,13 @@
 //     final NotificationData notificationData = NotificationData(
 //       to: deviceToken,
 //       notification: Notification(
-//         title: userName, // اسم المستخدم
-//         body: title, // الرسالة
+//         title: userName,
+//         body: title,
 //         priority: 'high',
 //         androidChannelId: 'high_importance_channel',
 //       ),
-//       data: {}, // يمكنك إضافة المزيد من البيانات هنا إذا لزم الأمر
+//       data: {},
 //     );
-//
 //     final NotificationApi notificationApi = NotificationApi();
 //     await notificationApi.sendNotification(notificationData);
 //   }

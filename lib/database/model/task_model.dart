@@ -5,12 +5,17 @@ class Task {
   String? desc;
   DateTime? dateTime;
   bool isDone;
+  double? DailyTarget;
+  double? Income;
+
 
   Task({
     this.id,
     this.title,
     this.desc,
     this.dateTime,
+    this.DailyTarget,
+    this.Income = 0,
     this.isDone = false,
   });
 
@@ -21,6 +26,8 @@ class Task {
           desc: date?["desc"],
           dateTime: DateTime.fromMillisecondsSinceEpoch(date?["dateTime"]),
           isDone: date?["isDone"],
+    DailyTarget: date?["DailyTarget"],
+    Income: date?["Income"],
         );
 
   Map<String,dynamic>toFireStore() {
@@ -30,6 +37,8 @@ class Task {
       "desc": desc,
       "dateTime": dateTime?.millisecondsSinceEpoch,
       "isDone": isDone,
+      "DailyTarget": DailyTarget,
+      "Income": Income,
     };
   }
 }

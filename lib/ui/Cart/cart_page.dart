@@ -16,6 +16,8 @@ import '../Product/added_product.dart';
 import '../componant/custom_form_field.dart';
 
 class CartPage extends StatefulWidget {
+  static const String routeName = "CartPage";
+
   final List<AddedProduct> addProduct;
 
   CartPage({required this.addProduct});

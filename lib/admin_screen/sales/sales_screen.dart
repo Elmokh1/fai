@@ -20,7 +20,7 @@ import '../../ui/HomeScreen/todos_list/task_item.dart';
 class SalesScreen extends StatefulWidget {
   static const String routeName = "SalesScreen";
 
-  final User? user;
+  final UserModel? user;
 
   SalesScreen({this.user});
 

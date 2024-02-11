@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class MapTRACKUser extends StatefulWidget {
   static const String routeName = "Map";
   final Task? task;
-  final MyUser.User? user;
+  final MyUser.UserModel? user;
 
   MapTRACKUser({this.task, this.user});
 

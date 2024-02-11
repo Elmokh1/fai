@@ -25,10 +25,10 @@ class _DoneState extends State<Done> {
       children: [
         Center(
           child: Text(
-            "Welcome Back }",
-            style: GoogleFonts.poppins(
+            "Welcome Back",
+            style: GoogleFonts.mogra(
               fontSize: 15,
-              color: Colors.blue,
+              color: Colors.green.withOpacity(.7),
             ),
           ),
         ),
@@ -110,12 +110,53 @@ class _DoneState extends State<Done> {
                                 style: TextStyle(color: Colors.black),
                               ),
                               Text(
-                                'التحصيل: $totalIncome',
+                                'التحصيل الكلي: $totalIncome',
                                 style: TextStyle(color: Colors.black),
                               ),
-                              Text(
-                                'العجز : $difference',
-                                style: TextStyle(color: Colors.red),
+                              StreamBuilder<QuerySnapshot<Income>>(
+                                builder: (context, incomeSnapshot) {
+                                  if (incomeSnapshot.hasError) {
+                                    return Container();
+                                  }
+                                  if (incomeSnapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                  var incomeList = incomeSnapshot.data?.docs
+                                      .map((doc) => doc.data() as Income)
+                                      .toList();
+                                  double totalIncome = 0.0;
+                                  if (incomeList != null &&
+                                      incomeList.isNotEmpty) {
+                                    totalIncome = incomeList
+                                        .map(
+                                            (income) => income.DailyInCome ?? 0)
+                                        .reduce((a, b) => a + b);
+                                  }
+
+                                  return InkWell(
+                                    onTap: () {
+                                      print(
+                                        MyDateUtils.dateOnly(selectedDate)
+                                            .millisecondsSinceEpoch,
+                                      );
+                                    },
+                                    child: Text(
+                                      "التحصيل اليومي : $totalIncome",
+                                      style: GoogleFonts.inter(
+                                        color: Colors.blue.withOpacity(.9),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                stream: MyDataBase.getDailyIncomeRealTimeUpdate(
+                                  user?.uid ?? "",
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      MyDateUtils.dateOnly(selectedDate)
+                                          .millisecondsSinceEpoch),
+                                ),
                               ),
                             ],
                           );
@@ -146,7 +187,7 @@ class _DoneState extends State<Done> {
                 );
               }
               var taskList =
-              snapshot.data?.docs.map((doc) => doc.data()).toList();
+                  snapshot.data?.docs.map((doc) => doc.data()).toList();
               if (taskList?.isEmpty == true) {
                 return Center(
                   child: Text(

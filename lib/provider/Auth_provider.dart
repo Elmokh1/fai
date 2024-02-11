@@ -6,10 +6,10 @@ import 'package:fai/database/model/task_model.dart';
 import '../database/model/user_model.dart';
 
 class appProvider extends ChangeNotifier{
-  User ? currentUser;
+  UserModel ? currentUser;
   Task ? currentTask;
   Report ? currentReport;
-  void updateUSer (User loggedIn) {
+  void updateUSer (UserModel loggedIn) {
     currentUser = loggedIn;
     notifyListeners();
   }

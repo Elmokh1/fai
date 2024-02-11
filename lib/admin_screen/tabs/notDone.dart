@@ -10,7 +10,7 @@ import '../../database/my_database.dart';
 import '../../ui/HomeScreen/todos_list/task_item.dart';
 
 class NotDone extends StatefulWidget {
-  User user;
+  UserModel user;
 
   NotDone(this.user);
 

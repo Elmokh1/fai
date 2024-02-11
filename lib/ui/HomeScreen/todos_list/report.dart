@@ -1,6 +1,5 @@
 import 'package:fai/import.dart';
 
-
 class ReportModal extends StatefulWidget {
   Task task;
 
@@ -19,13 +18,13 @@ class _ReportModalState extends State<ReportModal> {
   TextEditingController IncomeController = TextEditingController(text: "0");
   var auth = FirebaseAuth.instance;
   User? user;
+
   @override
   void initState() {
     super.initState();
     user = auth.currentUser;
     askUserForPermissionAndService();
   }
-
 
   askUserForPermissionAndService() async {
     await requestPermission();
@@ -75,7 +74,6 @@ class _ReportModalState extends State<ReportModal> {
                 return null;
               },
             ),
-
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
               child: InkWell(
@@ -166,7 +164,6 @@ class _ReportModalState extends State<ReportModal> {
 
   void addReport() async {
     double Dincome = double.parse(IncomeController.text);
-
     var locationData = await locationManger.getLocation();
     Report report = Report(
       long: locationData.longitude ?? 0.0,
@@ -175,7 +172,8 @@ class _ReportModalState extends State<ReportModal> {
       dateTime: selectedDate,
     );
 
-    appProvider reportProvider = Provider.of<appProvider>(context, listen: false);
+    appProvider reportProvider =
+        Provider.of<appProvider>(context, listen: false);
     var taskId = await reportProvider.currentTask?.id;
     var userId = await reportProvider.currentUser?.id;
     print(taskId);
@@ -186,12 +184,14 @@ class _ReportModalState extends State<ReportModal> {
     );
     Income income = Income(
       DailyInCome: Dincome,
+      clientName: widget.task.title,
+      dateTime: selectedDate,
     );
     await MyDataBase.addIncome(
       user?.uid ?? "",
       income,
     );
-
+    await MyDataBase.editTaskIncome(user?.uid??"", widget.task.id ??"", Dincome);
     DialogUtils.hideDialog(context);
     Fluttertoast.showToast(
         msg: "Report Add Successfully",
@@ -203,6 +203,5 @@ class _ReportModalState extends State<ReportModal> {
         fontSize: 16.0);
     var authProvider = Provider.of<appProvider>(context, listen: false);
     authProvider.updateReport(report);
-
   }
 }

@@ -6,7 +6,7 @@ import 'package:fai/database/model/user_model.dart' as MyUser;
 
 class UserInformation extends StatefulWidget {
 
-  MyUser.User user;
+  MyUser.UserModel user;
   UserInformation(this.user);
 
   @override

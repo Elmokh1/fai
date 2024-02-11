@@ -12,11 +12,14 @@ class TaskItem extends StatefulWidget {
 class _TaskItemState extends State<TaskItem> {
   var auth = FirebaseAuth.instance;
   User? user;
+  double Dincome = 0.0; // إضافة المتغير هنا
+
   @override
   void initState() {
     super.initState();
     user = auth.currentUser;
   }
+
   @override
   Widget build(BuildContext context) {
     var authProvider = Provider.of<appProvider>(context);
@@ -26,12 +29,12 @@ class _TaskItemState extends State<TaskItem> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14.0),
-          color: Colors.red,
+          color: Colors.blueAccent.withOpacity(.6),
         ),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14.0),
-            color: Colors.white,
+            color: Colors.blueAccent.withOpacity(.1),
           ),
           child: Row(
             children: [
@@ -63,58 +66,58 @@ class _TaskItemState extends State<TaskItem> {
                       child: widget.task.isDone == false
                           ? Image.asset("assets/images/Ic_check.png")
                           : Icon(
-                              Icons.not_interested_outlined,
-                              color: Colors.red,
-                            )),
+                        Icons.not_interested_outlined,
+                        color: Colors.red,
+                      )),
                 ),
               ),
               Expanded(
                   child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  widget.task.isDone == false
-                      ? Text(
-                          "${widget.task.title}",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: widget.task.isDone == false
-                                ? theme.primaryColor
-                                : Colors.green,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        )
-                      : Text(
-                          "${widget.task.title}",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: widget.task.isDone == false
-                                ? theme.primaryColor
-                                : Colors.green,
-                            fontWeight: FontWeight.w700,
-                          ),
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      widget.task.isDone == false
+                          ? Text(
+                        "${widget.task.title}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: widget.task.isDone == false
+                              ? Colors.white
+                              : Colors.white,
+                          fontWeight: FontWeight.w700,
                         ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  widget.task.isDone == false
-                      ? Text(
-                          "${widget.task.desc}",
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        )
-                      : Text(
-                          "${widget.task.desc}",
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        )
-                ],
-              )),
+                      )
+                          : Text(
+                        "${widget.task.title}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: widget.task.isDone == false
+                              ? theme.primaryColor
+                              : Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      widget.task.isDone == false
+                          ? Text(
+                        "${widget.task.desc}",
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      )
+                          : Text(
+                        "${widget.task.desc}",
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      )
+                    ],
+                  )),
               Container(
                 margin: const EdgeInsets.all(20),
                 height: 80,
@@ -128,8 +131,8 @@ class _TaskItemState extends State<TaskItem> {
     );
   }
 
-  void showReportModal() {
-    showModalBottomSheet(
+  void showReportModal( ) {
+     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       builder: (context) {

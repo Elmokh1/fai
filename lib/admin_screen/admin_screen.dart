@@ -11,11 +11,12 @@ class AdminScreen extends StatefulWidget {
 class _AdminScreenState extends State<AdminScreen> {
   DateTime selectedDate = DateTime.now();
   DateTime focusedDate = DateTime.now();
-  MyUser.User? user;
+  MyUser.UserModel? user;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Container(
@@ -123,7 +124,7 @@ class _AdminScreenState extends State<AdminScreen> {
           Expanded(
             child: Container(
               height: MediaQuery.of(context).size.height * 1,
-              child: StreamBuilder<QuerySnapshot<MyUser.User>>(
+              child: StreamBuilder<QuerySnapshot<MyUser.UserModel>>(
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text(snapshot.error.toString());

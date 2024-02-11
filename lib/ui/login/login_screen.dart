@@ -1,4 +1,5 @@
 import 'package:fai/import.dart';
+import 'package:fai/ui/main_page/main_page.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "Login";
@@ -140,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
         "User Logged in  Successfully",
         posActionName: "ok",
         posAction: () {
-          Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+          Navigator.pushReplacementNamed(context, MainPage.routeName);
         },
         dismissible: false,
       );

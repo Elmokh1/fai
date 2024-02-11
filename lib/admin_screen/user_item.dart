@@ -4,7 +4,7 @@ import 'package:fai/database/model/user_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UserItem extends StatelessWidget {
-  final User user;
+  final UserModel user;
 
   UserItem({required this.user});
 
@@ -25,7 +25,8 @@ class UserItem extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             gradient: LinearGradient(
-              colors: [Colors.black.withOpacity(.8), Colors.grey], // Use your desired colors
+              colors: [Colors.black.withOpacity(.8), Colors.grey],
+              // Use your desired colors
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

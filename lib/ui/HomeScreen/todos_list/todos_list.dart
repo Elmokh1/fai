@@ -22,28 +22,6 @@ class _TodoListState extends State<TodoList> {
     var authProvider = Provider.of<appProvider>(context);
     return Column(
       children: [
-        InkWell(
-          onTap: (){
-            Navigator.pushNamed(context, UserSalesScreen.routeName);
-          },
-          child: Container(
-            width: 200,
-            height: 50,
-            decoration: BoxDecoration(
-              border: Border.all(),
-                borderRadius: BorderRadius.circular(150),
-            ),
-            child: Center(
-              child: Text(
-                "My Order ",
-                style: GoogleFonts.poppins(
-                  fontSize: 30,
-                  color: Colors.red,
-                ),
-              ),
-            ),
-          ),
-        ),
         TableCalendar(
           firstDay: DateTime.now().subtract(Duration(days: 365)),
           lastDay: DateTime.now().add(Duration(days: 365)),

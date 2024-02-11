@@ -1,6 +1,12 @@
 import 'package:fai/import.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
+  DateTime Time;
+  final Function(bool) toggleShowAddTaskBottom;
+
+  AddTaskBottomSheet(
+      {required this.Time, required this.toggleShowAddTaskBottom});
+
   @override
   State<AddTaskBottomSheet> createState() => _AddTaskBottomSheetState();
 }
@@ -48,7 +54,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               height: 10,
             ),
             CustomTextFormField(
-              Label: "التحصيل",
+              Label: " مستهدف التحصيل",
               controller: TargetController,
               validator: (text) {
                 if (text == null || text.trim().isEmpty) {
@@ -70,34 +76,34 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
             const SizedBox(
               height: 10,
             ),
-            const Padding(
-              padding: EdgeInsets.only(
-                left: 20.0,
-                top: 5,
-                bottom: 5,
-              ),
-              child: Text(
-                "Selected time",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            Center(
-              child: InkWell(
-                onTap: () {
-                  showTaskDatePicker();
-                },
-                child: Text(
-                  "${MyDateUtils.formatTaskDate(selectedDate)}",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.only(
+            //     left: 20.0,
+            //     top: 5,
+            //     bottom: 5,
+            //   ),
+            //   child: Text(
+            //     "Selected time",
+            //     style: TextStyle(
+            //       fontSize: 20,
+            //       fontWeight: FontWeight.w500,
+            //     ),
+            //   ),
+            // ),
+            // Center(
+            //   child: InkWell(
+            //     onTap: () {
+            //       showTaskDatePicker();
+            //     },
+            //     child: Text(
+            //       "${MyDateUtils.formatTaskDate(selectedDate)}",
+            //       style: TextStyle(
+            //         fontSize: 20,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
@@ -120,13 +126,16 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   void addTask() async {
     double DTarget = double.parse(TargetController.text);
 
+    widget.toggleShowAddTaskBottom(false);
+
     if (formKey.currentState?.validate() == false) {
       return;
     }
     Task task = Task(
-      dateTime: MyDateUtils.dateOnly(selectedDate),
+      dateTime: MyDateUtils.dateOnly(widget.Time),
       desc: descriptionController.text,
       title: titleController.text,
+      DailyTarget: DTarget,
     );
 
     appProvider authProvider = Provider.of<appProvider>(context, listen: false);
@@ -134,20 +143,22 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     await MyDataBase.addTask(user?.uid ?? "", task);
     Target target = Target(
       DailyTarget: DTarget,
+      clientName: titleController.text,
+      dateTime: selectedDate,
     );
     await MyDataBase.addTarget(
       user?.uid ?? "",
       target,
     );
-    DialogUtils.hideDialog(context);
-    Fluttertoast.showToast(
-        msg: "Task Add Successfully",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // DialogUtils.hideDialog(context);
+    // Fluttertoast.showToast(
+    //     msg: "Task Add Successfully",
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.TOP,
+    //     timeInSecForIosWeb: 1,
+    //     backgroundColor: Colors.green,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   var selectedDate = DateTime.now();

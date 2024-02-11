@@ -1,5 +1,8 @@
 import 'package:fai/database/fcm_helper.dart';
-import 'package:fai/ui/HomeScreen/add_client_page.dart';
+import 'package:fai/ui/HomeScreen/add_task/add_client_page.dart';
+import 'package:fai/ui/main_page/Debts/AllDebt/show_debts_page.dart';
+import 'package:fai/ui/main_page/Debts/debts.dart';
+import 'package:fai/ui/main_page/main_page.dart';
 import 'package:fai/ui/user_order/my_order_page.dart';
 
 import 'import.dart';
@@ -16,7 +19,7 @@ void main() async {
       create: (buildcontext) => appProvider(),
       child: BlocProvider(
         create: (context) => MyCubit(),
-        child: MyApp(),
+        child: const MyApp(),
       ),
     ),
   );
@@ -44,31 +47,32 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: const TextTheme(
-          headline4: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
+        // textTheme: const TextTheme(
+        //   headline4: TextStyle(
+        //       fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+        // ),
         appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true),
-        scaffoldBackgroundColor: const Color(0xFFDFECDB),
+        // scaffoldBackgroundColor: const Color(0xFFDFECDB),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Colors.transparent, elevation: 0),
       ),
-      initialRoute: user != null ? HomeScreen.routeName : Splash.routename,
-      // initialRoute: AddNewTask.routeName,
+      initialRoute: Splash.routeName,
       routes: {
         RegisterScreen.routeName: (context) => RegisterScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
-        Splash.routename: (context) => Splash(),
+        Splash.routeName: (context) => Splash(),
         AdminScreen.routeName: (context) => AdminScreen(),
         MapTRACK.routeName: (context) => MapTRACK(),
         Product.routeName: (context) => Product(),
         SalesScreen.routeName: (context) => SalesScreen(),
         UserSalesScreen.routeName: (context) => UserSalesScreen(),
-        // AddNewTask.routeName: (context) => AddNewTask(),
+        AddNewTask.routeName: (context) => AddNewTask(),
+        MainPage.routeName: (context) =>  MainPage(),
+        ShowAllDebtPage.routeName: (context) => ShowAllDebtPage(),
       },
     );
   }

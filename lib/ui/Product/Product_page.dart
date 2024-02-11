@@ -1,4 +1,5 @@
 import 'package:fai/import.dart';
+import 'package:fai/ui/main_page/main_page.dart';
 
 
 class Product extends StatefulWidget {
@@ -36,7 +37,7 @@ class _ProductState extends State<Product> {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, HomeScreen.routeName);
+            Navigator.pushNamed(context, MainPage.routeName);
           },
           child: Icon(
             Icons.arrow_back,

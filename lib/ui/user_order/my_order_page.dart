@@ -2,6 +2,7 @@ import 'package:fai/import.dart';
 import 'package:fai/ui/user_order/user_order_item.dart';
 
 import '../../admin_screen/sales/order_item.dart';
+import '../main_page/main_page.dart';
 
 class UserSalesScreen extends StatefulWidget {
   static const String routeName = "UserSalesScreen";
@@ -26,7 +27,19 @@ class _NotDoneState extends State<UserSalesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pushReplacementNamed(context, MainPage.routeName);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            size: 30,
+            color: Colors.black,
+          ),
+        ),
+
+      ),
       body: Column(
         children: [
           TableCalendar(

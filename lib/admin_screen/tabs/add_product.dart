@@ -1,7 +1,7 @@
 import 'package:fai/import.dart';
 
 class AddProduct extends StatefulWidget {
-  static const String routeName ="AddProduct";
+  static const String routeName = "AddProduct";
 
   @override
   State<AddProduct> createState() => _AddProductState();
@@ -73,10 +73,7 @@ class _AddProductState extends State<AddProduct> {
               Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: ElevatedButton(
-
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(200, 80)
-                  ),
+                  style: ElevatedButton.styleFrom(fixedSize: Size(200, 80)),
                   onPressed: () {
                     Add();
                   },
@@ -86,12 +83,10 @@ class _AddProductState extends State<AddProduct> {
                   ),
                 ),
               ),
-
             ],
           ),
         ),
       ),
-
     );
   }
 
@@ -101,7 +96,7 @@ class _AddProductState extends State<AddProduct> {
     }
     int? price = int.tryParse(PriceController.text);
     AddProductModel addProduct = AddProductModel(
-      product: nameController.text ,
+      product: nameController.text,
       price: price,
       des: desController.text,
     );
