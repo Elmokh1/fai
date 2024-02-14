@@ -1,5 +1,4 @@
 import 'package:fai/import.dart';
-import 'package:fai/ui/main_page/main_page.dart';
 
 
 class Product extends StatefulWidget {
@@ -35,16 +34,6 @@ class _ProductState extends State<Product> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, MainPage.routeName);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            size: 30,
-            color: Colors.black,
-          ),
-        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -54,6 +43,12 @@ class _ProductState extends State<Product> {
             onPressed: handleSearch,
           ),
         ],
+        leading: InkWell(
+          child: Icon(Icons.arrow_back),
+          onTap: (){
+            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+          },
+        ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: Padding(

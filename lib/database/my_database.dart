@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fai/database/model/add_post_model.dart';
 import 'package:fai/database/model/debt_model.dart';
 import 'package:fai/database/model/debt_model.dart';
 import 'package:fai/database/model/debt_model.dart';
 import 'package:fai/database/model/debt_model.dart';
 import 'package:fai/database/model/invoice_model.dart';
+import 'package:fai/database/model/questions_model.dart';
+import 'package:fai/database/model/questions_model.dart';
+import 'package:fai/database/model/questions_model.dart';
+import 'package:fai/database/model/questions_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fai/database/model/Order_Model.dart';
 import 'package:fai/database/model/add_product.dart';
@@ -36,6 +41,15 @@ class MyDataBase {
               Task.fromFireStore(snapshot.data()),
           toFirestore: (task, options) => task.toFireStore(),
         );
+  }
+  static CollectionReference<QuestionsModel> getQuestionsCollection() {
+         return FirebaseFirestore.instance
+        .collection(QuestionsModel.collectionName)
+        .withConverter<QuestionsModel>(
+      fromFirestore: (snapshot, options) =>
+          QuestionsModel.fromFireStore(snapshot.data()),
+      toFirestore: (question, options) => question.toFireStore(),
+    );
   }
 
   static CollectionReference<Report> getReportCollection(
@@ -128,6 +142,16 @@ class MyDataBase {
         );
   }
 
+  static CollectionReference<AddPostModel> getAddPostCollection() {
+    return FirebaseFirestore.instance
+        .collection(AddPostModel.collectionName)
+        .withConverter<AddPostModel>(
+      fromFirestore: (snapshot, options) =>
+          AddPostModel.fromFireStore(snapshot.data()),
+      toFirestore: (add, options) => add.toFireStore(),
+    );
+  }
+
 //user
   static Future<void> addUser(UserModel user) {
     var collection = getUserCollection();
@@ -162,9 +186,7 @@ class MyDataBase {
         .snapshots();
   }
 
-  static Stream<QuerySnapshot<Task>> getTasksRealTimeUpdateInAdmin(
-    String uId,
-  ) {
+  static Stream<QuerySnapshot<Task>> getTasksRealTimeUpdateInAdmin(String uId,) {
     return getTaskCollection(uId).orderBy("dateTime",descending: true)
         .snapshots();
   }
@@ -348,21 +370,71 @@ class MyDataBase {
     );
   }
 
-
-
-
-
-
   //invoice
   static Future<void> addClientInvoice(String uid, clientInvoiceModel clientInvoice,String cId) {
     var newClientInvoice = getClientInvoiceModelCollection(uid,cId).doc();
     clientInvoice.id = newClientInvoice.id;
     return newClientInvoice.set(clientInvoice);
   }
-
-
   static Stream<QuerySnapshot<clientInvoiceModel>> getClientInvoiceRealTimeUpdate(String uId,String cId) {
     return getClientInvoiceModelCollection(uId,cId).snapshots();
+  }
+
+
+
+  // post
+  static Future<void> addAddPost(AddPostModel addPost) {
+    var newAddPost = getAddPostCollection().doc();
+    addPost.id = newAddPost.id;
+    return newAddPost.set(addPost);
+  }
+
+  static Future<QuerySnapshot<AddPostModel>> getAddPosts() {
+    return getAddPostCollection().get();
+  }
+
+  static Stream<QuerySnapshot<AddPostModel>> getAddPostsRealTimeUpdate() {
+    return getAddPostCollection()
+        .orderBy("dateTime",descending: true)
+        // .where("dateTime", isEqualTo: date)
+        .snapshots();
+  }
+
+
+  static Future<void> deleteAddPost( String addPostId) {
+    return getAddPostCollection().doc(addPostId).delete();
+  }
+
+  static Future<void> editAddPost( String addPostId,String postPhoto) {
+    return getAddPostCollection().doc(addPostId).update(
+      {
+        'photo': postPhoto,
+      },
+    );
+  }
+  //Questions
+  static Future<void> addQuestions(QuestionsModel question) {
+    var newQuestions = getQuestionsCollection().doc();
+    question.id = newQuestions.id;
+    return newQuestions.set(question);
+  }
+
+  static Future<QuerySnapshot<QuestionsModel>> getQuestions() {
+    return getQuestionsCollection().get();
+  }
+
+  static Stream<QuerySnapshot<QuestionsModel>> getQuestionsRealTimeUpdate() {
+    return getQuestionsCollection()
+        .orderBy("dateTime",descending: true).snapshots();
+  }
+
+  static Stream<QuerySnapshot<QuestionsModel>> getQuestionsRealTimeUpdateInAdmin(String uId,) {
+    return getQuestionsCollection().orderBy("dateTime",descending: true)
+        .snapshots();
+  }
+
+  static Future<void> deleteQuestions( String questionId) {
+    return getQuestionsCollection().doc(questionId).delete();
   }
 
 }

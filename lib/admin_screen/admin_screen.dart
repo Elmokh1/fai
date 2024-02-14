@@ -1,3 +1,4 @@
+import 'package:fai/admin_screen/question/add_questions_page.dart';
 import 'package:fai/import.dart';
 import 'package:fai/database/model/user_model.dart' as MyUser;
 
@@ -117,6 +118,33 @@ class _AdminScreenState extends State<AdminScreen> {
                 ),
                 SizedBox(
                   width: 10,
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddQuestionPage(),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 100.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.blue.withOpacity(.6),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "اضافه سؤال ؟",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

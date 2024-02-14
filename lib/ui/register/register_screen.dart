@@ -1,7 +1,6 @@
 import 'package:fai/import.dart';
 import 'package:fai/database/model/user_model.dart' as MyUser;
 
-import '../main_page/main_page.dart';
 
 
 class RegisterScreen extends StatefulWidget {
@@ -160,7 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "User Register Successfully",
         posActionName: "ok",
         posAction: () {
-          Navigator.pushReplacementNamed(context, MainPage.routeName);
+          Navigator.pushReplacementNamed(context, HomeScreen.routeName);
         },
         dismissible: false,
       );

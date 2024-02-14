@@ -38,8 +38,8 @@ dependencies:
   table_calendar: ^3.0.9
   animated_splash_screen:
   google_fonts:
-  firebase_core:
-  firebase_auth:
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.14.1
   cloud_firestore:
   intl:
   provider: ^6.0.5
@@ -53,6 +53,10 @@ dependencies:
   firebase_messaging:
   flutter_local_notifications:
   http:
+  image_picker:
+  firebase_storage: ^11.5.3
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

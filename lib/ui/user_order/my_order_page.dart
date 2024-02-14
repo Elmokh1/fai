@@ -2,7 +2,6 @@ import 'package:fai/import.dart';
 import 'package:fai/ui/user_order/user_order_item.dart';
 
 import '../../admin_screen/sales/order_item.dart';
-import '../main_page/main_page.dart';
 
 class UserSalesScreen extends StatefulWidget {
   static const String routeName = "UserSalesScreen";
@@ -30,7 +29,7 @@ class _NotDoneState extends State<UserSalesScreen> {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            Navigator.pushReplacementNamed(context, MainPage.routeName);
+            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
           },
           child: Icon(
             Icons.arrow_back,

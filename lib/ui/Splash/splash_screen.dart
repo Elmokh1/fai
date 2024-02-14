@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fai/ui/login/login_screen.dart';
 
 import '../../import.dart';
-import '../main_page/main_page.dart';
 
 class Splash extends StatefulWidget {
   static const String routeName = "SplashScreen";
@@ -30,6 +29,6 @@ class _SplashState extends State<Splash> {
         backgroundColor: Colors.white,
         splashIconSize: 800,
         splash: Image.asset("assets/images/fai.png"),
-        nextScreen: user != null ? MainPage() : LoginScreen());
+        nextScreen: user != null ? HomeScreen() : LoginScreen());
   }
 }

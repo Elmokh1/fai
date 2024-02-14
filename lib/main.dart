@@ -1,8 +1,8 @@
 import 'package:fai/database/fcm_helper.dart';
 import 'package:fai/ui/HomeScreen/add_task/add_client_page.dart';
 import 'package:fai/ui/main_page/Debts/AllDebt/show_debts_page.dart';
-import 'package:fai/ui/main_page/Debts/debts.dart';
-import 'package:fai/ui/main_page/main_page.dart';
+import 'package:fai/ui/post/posts_review/post_view.dart';
+import 'package:fai/ui/post/posts_review/post_widget.dart';
 import 'package:fai/ui/user_order/my_order_page.dart';
 
 import 'import.dart';
@@ -47,10 +47,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // textTheme: const TextTheme(
-        //   headline4: TextStyle(
-        //       fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-        // ),
         appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -59,7 +55,8 @@ class _MyAppState extends State<MyApp> {
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Colors.transparent, elevation: 0),
       ),
-      initialRoute: Splash.routeName,
+      initialRoute: RegisterScreen.routeName,
+      // home: PostView(),
       routes: {
         RegisterScreen.routeName: (context) => RegisterScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
@@ -71,7 +68,7 @@ class _MyAppState extends State<MyApp> {
         SalesScreen.routeName: (context) => SalesScreen(),
         UserSalesScreen.routeName: (context) => UserSalesScreen(),
         AddNewTask.routeName: (context) => AddNewTask(),
-        MainPage.routeName: (context) =>  MainPage(),
+        // MainPage.routeName: (context) =>  MainPage(),
         ShowAllDebtPage.routeName: (context) => ShowAllDebtPage(),
       },
     );

@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   MyValidator validator;
   bool isPassword;
   int lines ;
+  int maxlines ;
 
   CustomTextFormField(
       {required this.Label,
@@ -15,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
       required this.controller,
       required this.validator,
          this.lines=1,
+        this.maxlines = 1,
       });
 
   @override
@@ -22,8 +24,8 @@ class CustomTextFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left:20.0,top: 15,),
       child: TextFormField(
-        maxLines: lines,
         minLines: lines,
+        maxLines: maxlines,
         obscureText: isPassword,
         validator: validator,
         controller: controller,
