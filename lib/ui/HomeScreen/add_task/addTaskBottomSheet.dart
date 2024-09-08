@@ -64,7 +64,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               },
             ),
             CustomTextFormField(
-              lines: 2,
+              lines: 1,
+              maxlines: 20,
               Label: 'Notes ',
               controller: descriptionController,
               validator: (text) {

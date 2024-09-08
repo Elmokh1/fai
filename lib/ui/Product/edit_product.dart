@@ -9,61 +9,61 @@ class EditPrice extends StatefulWidget {
 }
 
 class _EditPriceState extends State<EditPrice> {
-  String searchQuery = '';
-  late Stream<QuerySnapshot<AddProductModel>> searchStream;
+  // String searchQuery = '';
+  // late Stream<QuerySnapshot<AddProductModel>> searchStream;
 
   @override
   void initState() {
     super.initState();
-    searchStream = MyDataBase.getAddProductRealTimeUpdate();
+    // searchStream = MyDataBase.getAddProductRealTimeUpdate();
   }
 
-  void handleSearch() {
-    if (searchQuery.isNotEmpty) {
-      searchStream = MyDataBase.getAddProductCollection()
-          .where('product', isGreaterThanOrEqualTo: searchQuery)
-          .where('product', isLessThanOrEqualTo: searchQuery + '\uf8ff')
-          .snapshots();
-    } else {
-      searchStream = MyDataBase.getAddProductRealTimeUpdate();
-    }
-    setState(() {});
-  }
+  // void handleSearch() {
+  //   if (searchQuery.isNotEmpty) {
+  //     searchStream = MyDataBase.getAddProductCollection()
+  //         .where('product', isGreaterThanOrEqualTo: searchQuery)
+  //         .where('product', isLessThanOrEqualTo: searchQuery + '\uf8ff')
+  //         .snapshots();
+  //   } else {
+  //     searchStream = MyDataBase.getAddProductRealTimeUpdate();
+  //   }
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.black,
-            ),
-            onPressed: handleSearch,
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: "Search",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value;
-                });
-              },
-            ),
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(
+      //         Icons.search,
+      //         color: Colors.black,
+      //       ),
+      //       onPressed: handleSearch,
+      //     ),
+      //   ],
+      //   bottom: PreferredSize(
+      //     preferredSize: Size.fromHeight(60.0),
+      //     child: Padding(
+      //       padding: const EdgeInsets.all(8.0),
+      //       child: TextField(
+      //         decoration: InputDecoration(
+      //           labelText: "Search",
+      //           prefixIcon: Icon(Icons.search),
+      //           border: OutlineInputBorder(
+      //             borderRadius: BorderRadius.circular(30),
+      //           ),
+      //         ),
+      //         onChanged: (value) {
+      //           setState(() {
+      //             searchQuery = value;
+      //           });
+      //         },
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: Column(
         children: [
           Expanded(
@@ -99,7 +99,7 @@ class _EditPriceState extends State<EditPrice> {
                   itemCount: productList?.length ?? 0,
                 );
               },
-              stream: searchStream,
+              stream: MyDataBase.getAdddddProductsRealTimeUpdate(),
             ),
           ),
         ],

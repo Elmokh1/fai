@@ -22,11 +22,43 @@ class _PostViewState extends State<PostView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("تجارب عمليه"),
+      backgroundColor: Color(0xffD9EBFC),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: Padding(
+          padding: EdgeInsets.only(left:20, right: 20),
+          child: AppBar(
+            backgroundColor: Color(0xff49688D),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Text(
+                    "Posts",
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    style: GoogleFonts.aBeeZee(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            centerTitle: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
+              ),
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: [
+          SizedBox(height: 15,),
           Expanded(
             child: StreamBuilder<QuerySnapshot<AddPostModel>>(
               builder: (context, snapshot) {

@@ -1,16 +1,22 @@
 
+import 'package:fai/database/model/customer_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fai/database/model/report_model.dart';
 import 'package:fai/database/model/task_model.dart';
 
-import '../database/model/user_model.dart';
+import '../database/model/eng_model.dart';
 
 class appProvider extends ChangeNotifier{
-  UserModel ? currentUser;
+  EngModel ? currentUser;
   Task ? currentTask;
   Report ? currentReport;
-  void updateUSer (UserModel loggedIn) {
+  CustomerModel? customerModel;
+  void updateUSer (EngModel loggedIn) {
     currentUser = loggedIn;
+    notifyListeners();
+  }
+  void updateCustomer (CustomerModel loggedIn) {
+    customerModel = loggedIn;
     notifyListeners();
   }
   void updateTask(Task task) {

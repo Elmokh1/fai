@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:fai/database/model/add_post_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../import.dart';
@@ -152,13 +151,7 @@ class _AddPostState extends State<AddPost> {
     );
 
     DialogUtils.hideDialog(context);
-    Fluttertoast.showToast(
-        msg: "Post Added Successfully",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("تم النشر")),
+    );  }
 }

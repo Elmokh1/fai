@@ -1,12 +1,14 @@
 
-import 'package:fai/database/model/user_model.dart'as MyUser;
+import 'package:fai/database/model/eng_model.dart' as MyUser;
 import 'package:fai/import.dart';
 import 'package:intl/intl.dart';
+
+import '../../database/model/customer_model.dart';
 
 class MapTRACKUser extends StatefulWidget {
   static const String routeName = "Map";
   final Task? task;
-  final MyUser.UserModel? user;
+  final CustomerModel? user;
 
   MapTRACKUser({this.task, this.user});
 

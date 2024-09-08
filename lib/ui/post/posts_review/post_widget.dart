@@ -11,7 +11,8 @@ class PostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('dd/MM/yyyy hh:mm a');
     return Card(
-      elevation: 4,
+      color: Colors.white,
+      elevation: 1,
       margin: EdgeInsets.all(10),
       child: Padding(
         padding: EdgeInsets.all(10),
@@ -23,6 +24,7 @@ class PostWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+
               ),
             ),
             SizedBox(height: 10),

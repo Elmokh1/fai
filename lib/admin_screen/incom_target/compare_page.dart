@@ -1,10 +1,11 @@
 import 'package:fai/admin_screen/incom_target/compare_item_widget.dart';
-import 'package:fai/database/model/user_model.dart';
+import 'package:fai/database/model/customer_model.dart';
+import 'package:fai/database/model/eng_model.dart';
 
 import '../../import.dart';
 
 class ComparePage extends StatelessWidget {
-  UserModel user;
+  CustomerModel user;
 
   ComparePage({super.key, required this.user});
 

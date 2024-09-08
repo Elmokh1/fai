@@ -91,13 +91,7 @@ var formKey = GlobalKey<FormState>();
 
     print('Questions added successfully');
     DialogUtils.hideDialog(context);
-    Fluttertoast.showToast(
-        msg: "Questions Add Successfully",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Questions added successfully")),
+    );  }
 }

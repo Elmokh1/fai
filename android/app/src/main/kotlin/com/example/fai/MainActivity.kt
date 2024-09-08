@@ -1,4 +1,4 @@
-package com.example.fai
+package com.fai.fai
 
 import io.flutter.embedding.android.FlutterActivity
 

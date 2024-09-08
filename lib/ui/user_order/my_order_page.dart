@@ -13,7 +13,6 @@ class UserSalesScreen extends StatefulWidget {
 class _NotDoneState extends State<UserSalesScreen> {
   DateTime selectedDate = DateTime.now();
   DateTime focusedDate = DateTime.now();
-  Set<Marker> markerSet = {};
   var auth = FirebaseAuth.instance;
   User? user;
 

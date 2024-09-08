@@ -130,7 +130,8 @@ class _UserOrderItemState extends State<UserOrderItem> {
                               "مقبول",
                               style: TextStyle(color: Colors.green),
                             );
-                          } else if (widget.orderModel.accept == false &&
+                          }
+                          else if (widget.orderModel.accept == false &&
                               widget.orderModel.state == true) {
                             return const Text(
                               "تحت المراجعه",

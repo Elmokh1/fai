@@ -54,7 +54,7 @@ class _CartBottomState extends State<CartBottom> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              CartPage(addProduct : addedProduct),
+              CartPage(),
         ),
       );
     }

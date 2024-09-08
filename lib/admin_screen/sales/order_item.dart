@@ -1,5 +1,5 @@
 import 'package:fai/import.dart';
-import '../../database/model/user_model.dart' as MyUser;
+import '../../database/model/eng_model.dart' as MyUser;
 
 class OrderItem extends StatefulWidget {
   final OrderModel orderModel;

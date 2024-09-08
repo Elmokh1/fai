@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:fai/database/fcm_helper.dart';
 import 'package:fai/database/model/cart_item_model.dart';
 import 'package:fai/database/model/cart_item_model.dart';
 import 'package:fai/provider/Auth_provider.dart';
@@ -17,10 +15,10 @@ import '../componant/custom_form_field.dart';
 
 class CartPage extends StatefulWidget {
   static const String routeName = "CartPage";
-
-  final List<AddedProduct> addProduct;
-
-  CartPage({required this.addProduct});
+  //
+  // final List<AddedProduct> addProduct;
+  //
+  // CartPage({required this.addProduct});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -53,7 +51,7 @@ class _CartPageState extends State<CartPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Center(child: Text('Fai ')),
+                const Center(child: Text('AgriHawk')),
                 const Spacer(),
                 Text(
                   DateTime.now().toString().substring(0, 10),
@@ -226,14 +224,7 @@ class _CartPageState extends State<CartPage> {
     //     UserProvider.currentUser?.name ?? "", "تم اضافه اوردر");
 
     DialogUtils.hideDialog(context);
-    Fluttertoast.showToast(
-      msg: "تمت إضافة الطلب بنجاح",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-  }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("تم اضافه الطلب بنجاح.")),
+    );  }
 }

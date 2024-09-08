@@ -81,13 +81,7 @@ class _AddItemBottomSheetState extends State<AddItemBottomSheet>  {
     );
     await MyDataBase.addItemToCart(user?.uid?? "", cartItemModel);
     DialogUtils.hideDialog(context);
-    Fluttertoast.showToast(
-        msg: "Product Add Successfully",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
+   ScaffoldMessenger.of(context).showSnackBar(
+     SnackBar(content: Text("تم اضافه المنتج.")),
+   );  }
 }

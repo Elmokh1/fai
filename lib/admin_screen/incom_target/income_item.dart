@@ -2,12 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fai/database/model/income_model.dart';
-import 'package:fai/database/model/user_model.dart';
+import 'package:fai/database/model/eng_model.dart';
 
+import '../../database/model/customer_model.dart';
 import '../../database/my_database.dart';
 
 class IncomeItem extends StatelessWidget {
-  final UserModel? user;
+  final CustomerModel? user;
 
   IncomeItem({required this.user});
 

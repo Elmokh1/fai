@@ -1,15 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fai/database/model/add_post_model.dart';
-import 'package:fai/database/model/debt_model.dart';
-import 'package:fai/database/model/debt_model.dart';
-import 'package:fai/database/model/debt_model.dart';
+import 'package:fai/database/model/customer_model.dart';
 import 'package:fai/database/model/debt_model.dart';
 import 'package:fai/database/model/invoice_model.dart';
 import 'package:fai/database/model/questions_model.dart';
-import 'package:fai/database/model/questions_model.dart';
-import 'package:fai/database/model/questions_model.dart';
-import 'package:fai/database/model/questions_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:fai/database/model/Order_Model.dart';
 import 'package:fai/database/model/add_product.dart';
 import 'package:fai/database/model/cart_item_model.dart';
@@ -17,23 +11,54 @@ import 'package:fai/database/model/income_model.dart';
 import 'package:fai/database/model/report_model.dart';
 import 'package:fai/database/model/target_model.dart';
 import '../MyDateUtils.dart';
+import 'model/secttions_model.dart';
 import 'model/task_model.dart';
-import 'model/user_model.dart';
+import 'model/eng_model.dart';
+
+
 
 class MyDataBase {
   //CollectionReference
-  static CollectionReference<UserModel> getUserCollection() {
+  // static CollectionReference<EngModel> getUserCollection() {
+  //   return FirebaseFirestore.instance
+  //       .collection(EngModel.collectionName)
+  //       .withConverter<EngModel>(
+  //         fromFirestore: (snapshot, options) =>
+  //             EngModel.fromFireStore(snapshot.data()),
+  //         toFirestore: (user, options) => user.toFireStore(),
+  //       );
+  // }
+  static CollectionReference<CustomerModel> getCustomerCollection() {
     return FirebaseFirestore.instance
-        .collection(UserModel.collectionName)
-        .withConverter<UserModel>(
+        .collection(CustomerModel.collectionName)
+        .withConverter<CustomerModel>(
           fromFirestore: (snapshot, options) =>
-              UserModel.fromFireStore(snapshot.data()),
-          toFirestore: (user, options) => user.toFireStore(),
+              CustomerModel.fromFireStore(snapshot.data()),
+          toFirestore: (customer, options) => customer.toFireStore(),
+        );
+  }
+  static CollectionReference<AddProductModel> getTimerCollection() {
+    return FirebaseFirestore.instance
+        .collection(AddProductModel.collectionName)
+        .withConverter<AddProductModel>(
+          fromFirestore: (snapshot, options) =>
+              AddProductModel.fromFireStore(snapshot.data()),
+          toFirestore: (customer, options) => customer.toFireStore(),
         );
   }
 
+  static CollectionReference<SectionsModel> getSectionsCollection() {
+    return FirebaseFirestore.instance
+        .collection(SectionsModel.collectionName)
+        .withConverter<SectionsModel>(
+      fromFirestore: (snapshot, options) =>
+          SectionsModel.fromFireStore(snapshot.data()),
+      toFirestore: (sections, options) => sections.toFireStore(),
+    );
+  }
+
   static CollectionReference<Task> getTaskCollection(String uid) {
-    return getUserCollection()
+    return getCustomerCollection()
         .doc(uid)
         .collection(Task.collectionName)
         .withConverter<Task>(
@@ -65,7 +90,7 @@ class MyDataBase {
   }
 
   static CollectionReference<Income> getIncomeCollection(String uid) {
-    return getUserCollection()
+    return getCustomerCollection()
         .doc(uid)
         .collection(Income.collectionName)
         .withConverter<Income>(
@@ -75,7 +100,7 @@ class MyDataBase {
         );
   }
   static CollectionReference<DebtModel> getDebtCollection(String uid) {
-    return getUserCollection()
+    return getCustomerCollection()
         .doc(uid)
         .collection(DebtModel.collectionName)
         .withConverter<DebtModel>(
@@ -96,7 +121,7 @@ class MyDataBase {
   }
 
   static CollectionReference<Target> getTargetCollection(String uid) {
-    return getUserCollection()
+    return getCustomerCollection()
         .doc(uid)
         .collection(Target.collectionName)
         .withConverter<Target>(
@@ -107,7 +132,7 @@ class MyDataBase {
   }
 
   static CollectionReference<CartItemsModel> getItemCollection(String uid) {
-    return getUserCollection()
+    return getCustomerCollection()
         .doc(uid)
         .collection(CartItemsModel.collectionName)
         .withConverter<CartItemsModel>(
@@ -119,18 +144,19 @@ class MyDataBase {
         );
   }
 
-  static CollectionReference<AddProductModel> getAddProductCollection() {
-    return FirebaseFirestore.instance
+  static CollectionReference<AddProductModel> getAddProductCollection(
+      String secId) {
+    return getSectionsCollection()
+        .doc(secId)
         .collection(AddProductModel.collectionName)
         .withConverter<AddProductModel>(
-          fromFirestore: (snapshot, options) =>
-              AddProductModel.fromFireStore(snapshot.data()),
-          toFirestore: (add, options) => add.toFireStore(),
-        );
+      fromFirestore: (snapshot, options) =>
+          AddProductModel.fromFireStore(snapshot.data()),
+      toFirestore: (product, options) => product.toFireStore(),
+    );
   }
-
   static CollectionReference<OrderModel> getOrderCollection(String uid) {
-    return getUserCollection()
+    return getCustomerCollection()
         .doc(uid)
         .collection(OrderModel.collectionName)
         .withConverter<OrderModel>(
@@ -152,21 +178,53 @@ class MyDataBase {
     );
   }
 
-//user
-  static Future<void> addUser(UserModel user) {
-    var collection = getUserCollection();
+//Eng user
+//   static Future<void> addUser(EngModel user) {
+//     var collection = getCustomerCollection();
+//     return collection.doc(user.id).set(user);
+//   }
+//
+//   static Future<EngModel?> readUser(String id) async {
+//     var collection = getUserCollection();
+//     var docSnapShot = await collection.doc(id).get();
+//     return docSnapShot.data();
+//   }
+//
+//   static Stream<QuerySnapshot<EngModel>> getUserRealTimeUpdate() {
+//     return getUserCollection().snapshots();
+//   }
+
+  // Customer model
+  static Future<void> addCustomer(CustomerModel user) {
+    var collection = getCustomerCollection();
     return collection.doc(user.id).set(user);
   }
 
-  static Future<UserModel?> readUser(String id) async {
-    var collection = getUserCollection();
+  static Future<CustomerModel?> readCustomer(String id) async {
+    var collection = getCustomerCollection();
     var docSnapShot = await collection.doc(id).get();
     return docSnapShot.data();
   }
 
-  static Stream<QuerySnapshot<UserModel>> getUserRealTimeUpdate() {
-    return getUserCollection().snapshots();
+  static Stream<QuerySnapshot<CustomerModel>> getCustomerRealTimeUpdate(String uId) {
+    return getCustomerCollection().where("engId", isEqualTo: uId)
+        .snapshots();
   }
+  static Stream<QuerySnapshot<CustomerModel>> getCustomerRealTimeUpdateInAdmin() {
+    return getCustomerCollection().snapshots();
+  }
+  static Stream<QuerySnapshot<CustomerModel>> getCustomerDataRealTimeUpdate(String uId) {
+    return getCustomerCollection().where("id", isEqualTo: uId).snapshots();
+  }
+  static Future<void> editCustomer( String customerId, bool isFarmer,bool isCustomer) {
+    return getCustomerCollection().doc(customerId).update(
+      {
+        "isFarmer": isFarmer,
+        "isCustomer": isCustomer,
+      },
+    );
+  }
+
 
 //task
   static Future<void> addTask(String uid, Task task) {
@@ -175,6 +233,20 @@ class MyDataBase {
     return newTask.set(task);
   }
 
+  static Future<List<Task>> getTasksForDay(String userId, int dayInMillis) async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('tasks')
+          .where('dateTime', isEqualTo: dayInMillis)
+          .get();
+      return snapshot.docs.map((doc) => Task.fromFireStore(doc.data())).toList();
+    } catch (e) {
+      print('Error fetching tasks for day: $e');
+      return [];
+    }
+  }
   static Future<QuerySnapshot<Task>> getTasks(String uId) {
     return getTaskCollection(uId).get();
   }
@@ -185,9 +257,16 @@ class MyDataBase {
         .where("dateTime", isEqualTo: date)
         .snapshots();
   }
+  static Stream<QuerySnapshot<Task>> getTasksRealTimeUpdateWithWeek(String uId, int date) {
+    int endDate = date + (7 * 24 * 60 * 60 * 1000);
+    return getTaskCollection(uId)
+        .orderBy("dateTime", descending: false)
+        .where("dateTime", isGreaterThanOrEqualTo: date, isLessThanOrEqualTo: endDate)
+        .snapshots();
+  }
 
   static Stream<QuerySnapshot<Task>> getTasksRealTimeUpdateInAdmin(String uId,) {
-    return getTaskCollection(uId).orderBy("dateTime",descending: true)
+    return getTaskCollection(uId).orderBy("dateTime",descending: false)
         .snapshots();
   }
 
@@ -252,9 +331,7 @@ class MyDataBase {
     return newTarget.set(target);
   }
 
-  static Stream<QuerySnapshot<Target>> getTargetRealTimeUpdate(
-    String uId,
-  ) {
+  static Stream<QuerySnapshot<Target>> getTargetRealTimeUpdate(String uId,) {
     return getTargetCollection(uId).snapshots();
   }
 
@@ -273,25 +350,48 @@ class MyDataBase {
     return newReport.set(report);
   }
 
-  static Stream<QuerySnapshot<Report>> getReportRealTimeUpdate(
-      String uid, String tId) {
+  static Stream<QuerySnapshot<Report>> getReportRealTimeUpdate(String uid, String tId) {
     return getReportCollection(uid, tId).snapshots();
   }
 
 //Add Product
-  static Future<void> addProduct(AddProductModel addProduct) {
-    var addproduct = getAddProductCollection().doc();
-    addProduct.id = addproduct.id;
-    return addproduct.set(addProduct);
-  }
 
-  static Stream<QuerySnapshot<AddProductModel>> getAddProductRealTimeUpdate() {
-    return getAddProductCollection().snapshots();
+  static Future<void> addAddProduct(String secId, AddProductModel product) {
+    var newAddProduct = getAddProductCollection(secId).doc();
+    product.id = newAddProduct.id;
+    return newAddProduct.set(product);
   }
-
-  static Future<void> editProduct(String productId, int price) {
-    return getAddProductCollection().doc(productId).update({
+  static Future<void> editProduct(String secId,String productId, int price,String Photo) {
+    return getAddProductCollection(secId).doc(productId).update({
       "price": price,
+      "imageUrl": Photo,
+    });
+  }
+  static Future<void> deleteProduct(String secId ,String productId) {
+    return getAddProductCollection(secId).doc(productId).delete();
+  }
+
+  static Future<QuerySnapshot<AddProductModel>> getAddProducts(String secId) {
+    return getAddProductCollection(secId).get();
+  }
+
+  static Stream<QuerySnapshot<AddProductModel>> getAddProductsRealTimeUpdate(String secId) {
+    return getAddProductCollection(secId).orderBy("product",descending: true).snapshots();
+  }
+  static Stream<QuerySnapshot<AddProductModel>> getAdddddProductsRealTimeUpdate() {
+    return getTimerCollection().orderBy("product",descending: true).snapshots();
+  }
+  static Future<void> deleteProoooduct(String productId) {
+    return getTimerCollection().doc(productId).delete();
+  }
+
+
+  static Future<void> editProoooduct(String productId, int price,String des,String Photo) {
+    return getTimerCollection().doc(productId).update({
+      "price": price,
+      "des": des,
+      "price": price,
+      "imageUrl": Photo,
     });
   }
 
@@ -306,8 +406,7 @@ class MyDataBase {
     return getItemCollection(uId).get();
   }
 
-  static Stream<QuerySnapshot<CartItemsModel>> getItemRealTimeUpdate(
-      String uId) {
+  static Stream<QuerySnapshot<CartItemsModel>> getItemRealTimeUpdate(String uId) {
     return getItemCollection(uId).snapshots();
   }
 
@@ -330,8 +429,7 @@ class MyDataBase {
     return getOrderCollection(uId).get();
   }
 
-  static Stream<QuerySnapshot<OrderModel>> getOrderRealTimeUpdate(
-      String uId, int date) {
+  static Stream<QuerySnapshot<OrderModel>> getOrderRealTimeUpdate(String uId, int date) {
     return getOrderCollection(uId)
         .where("dateTime", isGreaterThanOrEqualTo: date)
         .where("dateTime",
@@ -339,8 +437,7 @@ class MyDataBase {
         .snapshots();
   }
 
-  static Future<void> editOrder(
-      String uId, String orderID, bool accept, bool state) {
+  static Future<void> editOrder(String uId, String orderID, bool accept, bool state) {
     return getOrderCollection(uId).doc(orderID).update(
       {
         "accept": accept,
@@ -435,6 +532,25 @@ class MyDataBase {
 
   static Future<void> deleteQuestions( String questionId) {
     return getQuestionsCollection().doc(questionId).delete();
+  }
+
+
+  //Sections
+
+  static Future<void> addSections(SectionsModel addSections) {
+    var addsections = getSectionsCollection().doc();
+    addSections.id = addsections.id;
+    return addsections.set(addSections);
+  }
+
+  static Future<SectionsModel?> readSections(String id) async {
+    var collection = getSectionsCollection();
+    var docSnapShot = await collection.doc(id).get();
+    return docSnapShot.data();
+  }
+
+  static Stream<QuerySnapshot<SectionsModel>> getSectionsRealTimeUpdate() {
+    return getSectionsCollection().snapshots();
   }
 
 }

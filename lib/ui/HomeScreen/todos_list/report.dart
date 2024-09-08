@@ -1,4 +1,5 @@
 import 'package:fai/import.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ReportModal extends StatefulWidget {
   Task task;
@@ -64,7 +65,8 @@ class _ReportModalState extends State<ReportModal> {
               },
             ),
             CustomTextFormField(
-              lines: 5,
+              lines: 1,
+              maxlines: 20,
               Label: "Report",
               controller: ReportController,
               validator: (text) {
@@ -112,6 +114,8 @@ class _ReportModalState extends State<ReportModal> {
   }
 
   var selectedDate = DateTime.now();
+  double? latitude;
+  double? longitude;
 
   void drawUserMarker() async {
     var canGetLocation = await canUseGps();
@@ -126,6 +130,10 @@ class _ReportModalState extends State<ReportModal> {
       return null;
     }
     var locationData = await locationManger.getLocation();
+    setState(() {
+      latitude = locationData.latitude;
+      longitude = locationData.longitude;
+    });
     print(locationData.latitude);
     print(locationData.longitude);
     return null;
@@ -163,11 +171,20 @@ class _ReportModalState extends State<ReportModal> {
   }
 
   void addReport() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var reportsList = prefs.getStringList('reports') ?? [];
+    reportsList.add('${ReportController.text}, ${DateTime.now()}');
+    await prefs.setStringList('reports', reportsList);
+
+    var incomesList = prefs.getStringList('incomes') ?? [];
+    incomesList.add('${IncomeController.text}, ${DateTime.now()}');
+    await prefs.setStringList('incomes', incomesList);
+
     double Dincome = double.parse(IncomeController.text);
-    var locationData = await locationManger.getLocation();
+
     Report report = Report(
-      long: locationData.longitude ?? 0.0,
-      lat: locationData.latitude ?? 0.0,
+      long: longitude ?? 0.0,
+      lat: latitude ?? 0.0,
       report: ReportController.text,
       dateTime: selectedDate,
     );
@@ -191,17 +208,12 @@ class _ReportModalState extends State<ReportModal> {
       user?.uid ?? "",
       income,
     );
-    await MyDataBase.editTaskIncome(user?.uid??"", widget.task.id ??"", Dincome);
+    await MyDataBase.editTaskIncome(
+        user?.uid ?? "", widget.task.id ?? "", Dincome);
     DialogUtils.hideDialog(context);
-    Fluttertoast.showToast(
-        msg: "Report Add Successfully",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0);
-    var authProvider = Provider.of<appProvider>(context, listen: false);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("تم اضافه التقرير بنجاح ")),
+    );    var authProvider = Provider.of<appProvider>(context, listen: false);
     authProvider.updateReport(report);
   }
 }

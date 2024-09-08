@@ -14,17 +14,23 @@ if (localPropertiesFile.exists()) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    flutterVersionCode = '4'  // تحديث رقم الإصدار
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    flutterVersionName = '2.0.2'  // تحديث اسم الإصدار
+}
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
 android {
-    namespace "com.example.fai"
-    compileSdkVersion flutter.compileSdkVersion
+    namespace "com.fai.fai"
+    compileSdkVersion 34  // تحديث الإصدار المستهدف لنظام التشغيل
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -41,24 +47,26 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.fai"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
+        applicationId "com.fai.fai"
         minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        targetSdkVersion 34  // تحديث الإصدار المستهدف لنظام التشغيل
+        versionCode flutterVersionCode.toInteger()  // استخدام رقم الإصدار الجديد
+        versionName flutterVersionName  // استخدام اسم الإصدار الجديد
         multiDexEnabled true
+    }
 
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-            crunchPngs false
+            signingConfig signingConfigs.release
         }
     }
 }

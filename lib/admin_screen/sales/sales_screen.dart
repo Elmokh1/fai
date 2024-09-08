@@ -8,10 +8,11 @@ import 'package:fai/ui/UserMap/user_map.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../MyDateUtils.dart';
+import '../../database/model/customer_model.dart';
 import '../../database/model/income_model.dart';
 import '../../database/model/target_model.dart';
 import '../../database/model/task_model.dart';
-import '../../database/model/user_model.dart';
+import '../../database/model/eng_model.dart';
 import '../../database/my_database.dart';
 import '../../map/map.dart';
 import '../../provider/Auth_provider.dart';
@@ -20,7 +21,7 @@ import '../../ui/HomeScreen/todos_list/task_item.dart';
 class SalesScreen extends StatefulWidget {
   static const String routeName = "SalesScreen";
 
-  final UserModel? user;
+  final CustomerModel? user;
 
   SalesScreen({this.user});
 

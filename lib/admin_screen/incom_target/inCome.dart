@@ -1,6 +1,7 @@
 import 'package:fai/admin_screen/incom_target/compare_page.dart';
+import 'package:fai/database/model/customer_model.dart';
 import 'package:fai/import.dart';
-import 'package:fai/database/model/user_model.dart' as MyUser;
+import 'package:fai/database/model/eng_model.dart' as MyUser;
 
 class IncomeScreen extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class IncomeScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<QuerySnapshot<MyUser.UserModel>>(
+            child: StreamBuilder<QuerySnapshot<CustomerModel>>(
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Text(snapshot.error.toString());
@@ -20,8 +21,15 @@ class IncomeScreen extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   );
                 }
-                var userList = snapshot.data?.docs.map((doc) => doc.data()).toList();
-                if (userList?.isEmpty == true) {
+
+                var userList = snapshot.data?.docs
+                    .map((doc) => doc.data() as CustomerModel)
+                    .where((user) =>
+                        user.isCustomer == true &&
+                        user.isFarmer == true &&
+                        user.isEng == true)
+                    .toList();
+                if (userList!.isEmpty) {
                   return Center(
                     child: Text(
                       "!! فاضي ",
@@ -31,9 +39,10 @@ class IncomeScreen extends StatelessWidget {
                     ),
                   );
                 }
+
                 return ListView.builder(
                   itemBuilder: (context, index) {
-                    final singleUser = userList?[2];
+                    final singleUser = userList?[index];
                     return InkWell(
                       onTap: () {
                         print(singleUser?.name);
@@ -48,10 +57,10 @@ class IncomeScreen extends StatelessWidget {
                       child: IncomeItem(user: singleUser),
                     );
                   },
-                  itemCount: userList?.length ?? 0,
+                  itemCount: userList?.length,
                 );
               },
-              stream: MyDataBase.getUserRealTimeUpdate(),
+              stream: MyDataBase.getCustomerRealTimeUpdateInAdmin(),
             ),
           ),
         ],

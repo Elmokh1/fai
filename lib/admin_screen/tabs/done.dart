@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fai/database/model/customer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,12 +9,12 @@ import '../../MyDateUtils.dart';
 import '../../database/model/income_model.dart';
 import '../../database/model/target_model.dart';
 import '../../database/model/task_model.dart';
-import '../../database/model/user_model.dart';
+import '../../database/model/eng_model.dart';
 import '../../database/my_database.dart';
 import '../../ui/HomeScreen/todos_list/task_item.dart';
 
 class ReportDone extends StatefulWidget {
-  UserModel user;
+  CustomerModel user;
 
   ReportDone(this.user);
 
@@ -48,10 +49,10 @@ class _NotDoneState extends State<ReportDone> {
             },
           ),
           InkWell(
-            onDoubleTap: () async {
+            onLongPress: () async {
               setState(() {});
-              await MyDataBase.deleteTarget(widget.user.id ?? "");
-              await MyDataBase.deleteIncome(widget.user.id ?? "");
+              await MyDataBase.deleteTarget(widget.user!.id ??"");
+              await MyDataBase.deleteIncome(widget.user!.id ??"");
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -109,23 +110,67 @@ class _NotDoneState extends State<ReportDone> {
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 Text(
-                                  'التحصيل: $totalIncome',
+                                  'التحصيل الكلي: $totalIncome',
                                   style: TextStyle(color: Colors.black),
                                 ),
-                                Text(
-                                  'العجز : $difference',
-                                  style: TextStyle(color: Colors.red),
+                                StreamBuilder<QuerySnapshot<Income>>(
+                                  builder: (context, incomeSnapshot) {
+                                    if (incomeSnapshot.hasError) {
+                                      return Container();
+                                    }
+                                    if (incomeSnapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                    var incomeList = incomeSnapshot.data?.docs
+                                        .map((doc) => doc.data() as Income)
+                                        .toList();
+                                    double totalIncome = 0.0;
+                                    if (incomeList != null &&
+                                        incomeList.isNotEmpty) {
+                                      totalIncome = incomeList
+                                          .map(
+                                              (income) => income.DailyInCome ?? 0)
+                                          .reduce((a, b) => a + b);
+                                    }
+
+                                    return InkWell(
+                                      onTap: () {
+                                        print(
+                                          MyDateUtils.dateOnly(selectedDate)
+                                              .millisecondsSinceEpoch,
+                                        );
+                                      },
+                                      child: Text(
+                                        "التحصيل اليومي : $totalIncome",
+                                        style: GoogleFonts.inter(
+                                          color: Colors.blue.withOpacity(.9),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  stream: MyDataBase.getDailyIncomeRealTimeUpdate(
+                                    widget.user!.id ??"",
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        MyDateUtils.dateOnly(selectedDate)
+                                            .millisecondsSinceEpoch),
+                                  ),
                                 ),
                               ],
                             );
                           },
                           stream: MyDataBase.getIncomeRealTimeUpdate(
-                              widget.user.id ?? ""),
+                              widget.user!.id ??""
+                          ),
                         );
                       },
                       stream: MyDataBase.getTargetRealTimeUpdate(
-                          widget.user.id ?? ""),
+                          widget.user!.id ??""
+                      ),
                     ),
+
                   ],
                 ),
               ),

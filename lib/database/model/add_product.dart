@@ -7,15 +7,18 @@ class AddProductModel {
   String? product;
   int? price;
   String? des;
+  String? imageUrl;
 
-  AddProductModel({this.id, this.product, this.price, this.des});
+  AddProductModel({this.id, this.product, this.price, this.des, this.imageUrl});
 
   AddProductModel.fromFireStore(Map<String, dynamic>? data)
       : this(
-            id: data?['id'],
-            product: data?['product'],
-            price: data?['price'],
-            des: data?['des']);
+          id: data?['id'],
+          product: data?['product'],
+          price: data?['price'],
+          des: data?['des'],
+    imageUrl: data?['imageUrl'],
+        );
 
   Map<String, dynamic> toFireStore() {
     return {
@@ -23,6 +26,7 @@ class AddProductModel {
       'product': product,
       'price': price,
       'des': des,
+      'imageUrl': imageUrl,
     };
   }
 }

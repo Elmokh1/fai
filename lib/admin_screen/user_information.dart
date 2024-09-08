@@ -1,12 +1,13 @@
 
+import 'package:fai/database/model/customer_model.dart';
 import 'package:fai/import.dart';
-import 'package:fai/database/model/user_model.dart' as MyUser;
+import 'package:fai/database/model/eng_model.dart' as MyUser;
 
 
 
 class UserInformation extends StatefulWidget {
 
-  MyUser.UserModel user;
+  CustomerModel user;
   UserInformation(this.user);
 
   @override
@@ -24,16 +25,6 @@ class _UserInformationState extends State<UserInformation> {
     ];
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          onTap: (){
-            Navigator.pushNamed(context,AdminScreen.routeName);
-          },
-          child: Icon(
-            Icons.arrow_back_rounded,
-            size: 30,
-            color: Colors.black,
-          ),
-        ),
         actions: [
           InkWell(
             onTap: (){
@@ -58,31 +49,27 @@ class _UserInformationState extends State<UserInformation> {
         ],
       ),
       body: tabs[selectedIndex],
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8,
-        child: BottomNavigationBar(
-          currentIndex: selectedIndex,
-          onTap: (index) {
-            setState(() {
-              selectedIndex = index;
-            });
-          },
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.list,
-                  size: 32,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.check_circle,
-                  size: 32,
-                ),
-                label: ''),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.list,
+                size: 32,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.check_circle,
+                size: 32,
+              ),
+              label: ''),
+        ],
       ),
     );
   }

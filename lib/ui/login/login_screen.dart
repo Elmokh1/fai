@@ -1,4 +1,6 @@
 import 'package:fai/import.dart';
+import 'package:fai/ui/register/register.dart';
+import 'package:fai/ui/user_interface/welcome_page.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "Login";
@@ -10,8 +12,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   var formKey = GlobalKey<FormState>();
   var nameController = TextEditingController(text: "ahmedMokhtar");
-  var emailController =
-      TextEditingController(text: "");
+  var emailController = TextEditingController(text: "");
   var passwordController = TextEditingController(text: "");
   var passwordConfirmationController =
       TextEditingController(text: "ahmedMokhtar");
@@ -91,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextButton(
                       onPressed: () {
                         Navigator.pushReplacementNamed(
-                            context, RegisterScreen.routeName);
+                            context, RegisterPage.routeName);
                       },
                       child: const Text("Don`t Have Account"))
                 ],
@@ -108,55 +109,43 @@ class _LoginScreenState extends State<LoginScreen> {
   FirebaseAuth authService = FirebaseAuth.instance;
 
   void Login() async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("جاري التحميل...")),
+    );
+
     // async - await
     if (formKey.currentState?.validate() == false) {
       return;
     }
-    if (emailController.text == "admin@gmail.com" &&
-        passwordController.text == "faifalcon") {
-      DialogUtils.showMessage(
-        context,
-        "User Logged in  Successfully",
-        posActionName: "ok",
-        posAction: () {
-          Navigator.pushReplacementNamed(context, AdminScreen.routeName);
-        },
-        dismissible: false,
-      );
-    }
-    DialogUtils.showLoadingDialog(context, 'Loading...');
     try {
       var result = await authService.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
-      var user = await MyDataBase.readUser(result.user?.uid ?? "");
+      var user = await MyDataBase.readCustomer(result.user?.uid ?? "");
       if (user == null) {
         DialogUtils.showMessage(context, "Error to ind user in db",
             posActionName: 'ok');
         return;
       }
-      DialogUtils.hideDialog(context);
-      DialogUtils.showMessage(
-        context,
-        "User Logged in  Successfully",
-        posActionName: "ok",
-        posAction: () {
-          Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-        },
-        dismissible: false,
+      // إخفاء SnackBar بعد انتهاء الطلب
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("تم تسجيل الدخول بنجاح")),
       );
+      Navigator.pushReplacementNamed(context, WelcomePage.routeName);
+
       var authProvider = Provider.of<appProvider>(context, listen: false);
-      authProvider.updateUSer(user);
+      authProvider.updateCustomer(user);
     } on FirebaseAuthException catch (e) {
-      DialogUtils.hideDialog(context);
       String errorMessage = 'wrong email or password';
-      DialogUtils.showMessage(context, errorMessage, posActionName: 'ok');
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("خطأ في البريد الإلكتروني أو كلمة المرور")),
+      );
     } catch (e) {
-      DialogUtils.hideDialog(context);
-      String errorMessage = 'Something went wrong';
-      DialogUtils.showMessage(context, errorMessage,
-          posActionName: 'cancel', negActionName: 'Try Again', negAction: () {
-        Login();
-      });
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("خطأ في الاتصال تحقق من الإنترنت")),
+      );
     }
   }
 }

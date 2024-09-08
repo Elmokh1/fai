@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA0X9oq6yscgVS1erbRXyCCAbTKW0ykbEI',
-    appId: '1:326905524604:web:2a0eada605fe5a5f9934f9',
-    messagingSenderId: '326905524604',
-    projectId: 'fai-falco',
-    authDomain: 'fai-falco.firebaseapp.com',
-    storageBucket: 'fai-falco.appspot.com',
-    measurementId: 'G-71BM53S58W',
+    apiKey: 'AIzaSyASM4rd9HfS0HWMNAkeD9Cr_TtnOE2bnBs',
+    appId: '1:974355530106:web:3978f267518b9a0b0e96c3',
+    messagingSenderId: '974355530106',
+    projectId: 'todo-agri-hawk',
+    authDomain: 'todo-agri-hawk.firebaseapp.com',
+    storageBucket: 'todo-agri-hawk.appspot.com',
+    measurementId: 'G-M0251FHFC1',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCPYzl0D6Ts97J5LG8y6hC8VM2Oi74e2zY',
-    appId: '1:326905524604:android:ae95ff78f96b0eff9934f9',
-    messagingSenderId: '326905524604',
-    projectId: 'fai-falco',
-    storageBucket: 'fai-falco.appspot.com',
+    apiKey: 'AIzaSyDIR92FscraE7Qxz9c4LlHflm2Au9aBEp8',
+    appId: '1:974355530106:android:8807f73843c30db20e96c3',
+    messagingSenderId: '974355530106',
+    projectId: 'todo-agri-hawk',
+    storageBucket: 'todo-agri-hawk.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyChWfRtOqbp0U7Cr_DVFgOl1jFX0m_wPdk',
-    appId: '1:326905524604:ios:a231fc78eecb1b529934f9',
-    messagingSenderId: '326905524604',
-    projectId: 'fai-falco',
-    storageBucket: 'fai-falco.appspot.com',
-    iosBundleId: 'com.example.fai',
+    apiKey: 'AIzaSyAqK8LrKE_tE7Mcf0aLQ_00GfaBILtqkk8',
+    appId: '1:974355530106:ios:1060c7f4d77b75880e96c3',
+    messagingSenderId: '974355530106',
+    projectId: 'todo-agri-hawk',
+    storageBucket: 'todo-agri-hawk.appspot.com',
+    iosBundleId: 'com.test.fai',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyChWfRtOqbp0U7Cr_DVFgOl1jFX0m_wPdk',
-    appId: '1:326905524604:ios:fedc568f16d6847b9934f9',
-    messagingSenderId: '326905524604',
-    projectId: 'fai-falco',
-    storageBucket: 'fai-falco.appspot.com',
+    apiKey: 'AIzaSyAqK8LrKE_tE7Mcf0aLQ_00GfaBILtqkk8',
+    appId: '1:974355530106:ios:ece1c112b93d3ebe0e96c3',
+    messagingSenderId: '974355530106',
+    projectId: 'todo-agri-hawk',
+    storageBucket: 'todo-agri-hawk.appspot.com',
     iosBundleId: 'com.example.fai.RunnerTests',
   );
 }

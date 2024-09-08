@@ -4,6 +4,7 @@ class Report {
   static const String collectionName = 'Report';
   String? id;
   String? report;
+  String? income;
   double? lat;
   double? long;
   DateTime? dateTime;
@@ -13,6 +14,7 @@ class Report {
     this.report,
     this.lat,
     this.long,
+    this.income,
     this.dateTime,
   });
 
@@ -21,6 +23,7 @@ class Report {
           id: data?['id'],
           report: data?['report'],
           lat: data?['lat'],
+          income: data?['income'],
           long: data?['long'],
           dateTime: DateTime.fromMillisecondsSinceEpoch(data?["dateTime"]),
         );
@@ -30,6 +33,7 @@ class Report {
       'id': id,
       'report': report,
       'lat': lat,
+      'long': long,
       'long': long,
       "dateTime": dateTime?.millisecondsSinceEpoch,
     };

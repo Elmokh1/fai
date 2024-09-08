@@ -1,10 +1,11 @@
+import 'package:fai/database/model/customer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fai/admin_screen/user_information.dart';
-import 'package:fai/database/model/user_model.dart';
+import 'package:fai/database/model/eng_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UserItem extends StatelessWidget {
-  final UserModel user;
+  final CustomerModel user;
 
   UserItem({required this.user});
 

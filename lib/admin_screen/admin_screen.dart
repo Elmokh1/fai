@@ -1,6 +1,7 @@
 import 'package:fai/admin_screen/question/add_questions_page.dart';
+import 'package:fai/database/model/customer_model.dart';
 import 'package:fai/import.dart';
-import 'package:fai/database/model/user_model.dart' as MyUser;
+import 'package:fai/database/model/eng_model.dart' as MyUser;
 
 class AdminScreen extends StatefulWidget {
   static const routeName = "AdminScreen";
@@ -12,7 +13,7 @@ class AdminScreen extends StatefulWidget {
 class _AdminScreenState extends State<AdminScreen> {
   DateTime selectedDate = DateTime.now();
   DateTime focusedDate = DateTime.now();
-  MyUser.UserModel? user;
+  MyUser.EngModel? user;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +153,7 @@ class _AdminScreenState extends State<AdminScreen> {
           Expanded(
             child: Container(
               height: MediaQuery.of(context).size.height * 1,
-              child: StreamBuilder<QuerySnapshot<MyUser.UserModel>>(
+              child: StreamBuilder<QuerySnapshot<CustomerModel>>(
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
@@ -177,12 +178,16 @@ class _AdminScreenState extends State<AdminScreen> {
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final user = userList![index];
-                      return UserItem(user: user);
+                      if(user.isEng == true&& user.isFarmer==true&&user.isCustomer==true){
+                        return UserItem(user: user);
+                      }
+                      return SizedBox(height: 1,);
+
                     },
                     itemCount: userList?.length ?? 0,
                   );
                 },
-                stream: MyDataBase.getUserRealTimeUpdate(),
+                stream: MyDataBase.getCustomerRealTimeUpdateInAdmin(),
               ),
             ),
           ),
