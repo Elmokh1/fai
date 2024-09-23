@@ -1,10 +1,13 @@
-
-
 import '../../../import.dart';
 import 'AllDebt/show_debts_page.dart';
 import 'add_client_bottomsheet.dart';
 
 class DebtManagementPage extends StatefulWidget {
+  String? userId;
+  bool? isAdmin;
+
+  DebtManagementPage({this.userId, this.isAdmin});
+
   @override
   _DebtManagementPageState createState() => _DebtManagementPageState();
 }
@@ -24,7 +27,10 @@ class _DebtManagementPageState extends State<DebtManagementPage> {
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * .05,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * .05,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -42,7 +48,10 @@ class _DebtManagementPageState extends State<DebtManagementPage> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.3,
                           child: Center(
                             child: Text(
                               "اضافه عميل",
@@ -61,9 +70,14 @@ class _DebtManagementPageState extends State<DebtManagementPage> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        ShowAllDebtPage.routeName,
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              ShowAllDebtPage(
+                                userId: widget.isAdmin == false ?  "" : widget.userId ?? "",
+
+                                isUser:widget.isAdmin ?? false,
+                              ),)
                       );
                     },
                     child: Padding(
@@ -74,7 +88,10 @@ class _DebtManagementPageState extends State<DebtManagementPage> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.3,
                           child: Center(
                             child: Text(
                               "المديونيات",
@@ -93,7 +110,10 @@ class _DebtManagementPageState extends State<DebtManagementPage> {
               ],
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * .2,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * .2,
             ),
           ],
         ),
@@ -109,9 +129,12 @@ class _DebtManagementPageState extends State<DebtManagementPage> {
         return SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
+              bottom: MediaQuery
+                  .of(context)
+                  .viewInsets
+                  .bottom,
             ),
-            child: AddClientBottomSheet(),
+            child: AddClientBottomSheet(isUser: widget.isAdmin ?? false,),
           ),
         );
       },

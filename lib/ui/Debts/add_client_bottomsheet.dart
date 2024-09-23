@@ -3,6 +3,10 @@ import 'package:fai/import.dart';
 import '../../../database/model/debt_model.dart';
 
 class AddClientBottomSheet extends StatefulWidget {
+  String? userId;
+  bool isUser;
+
+  AddClientBottomSheet({this.userId, required this.isUser});
 
   @override
   State<AddClientBottomSheet> createState() => _AddClientBottomSheetState();
@@ -92,15 +96,13 @@ class _AddClientBottomSheetState extends State<AddClientBottomSheet> {
       oldDebt: oldDebt,
     );
 
-    await MyDataBase.addDebt(
-      user?.uid ?? "",
-      debtModel
+    await  MyDataBase.addDebt(
+      widget.isUser == false ? user?.uid ?? "" : widget.userId ?? "",
+      debtModel,
     );
     DialogUtils.hideDialog(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("تم اضافه العميل ")),
     );
   }
-
-
 }

@@ -1,3 +1,4 @@
+import 'package:fai/database/model/customer_model.dart';
 import 'package:fai/database/model/debt_model.dart';
 
 import '../../../../import.dart';
@@ -5,6 +6,11 @@ import 'debt_item_widget.dart';
 
 class ShowAllDebtPage extends StatefulWidget {
   static const String routeName = "ShowAllDebtPage";
+
+  String? userId;
+  bool? isUser;
+
+  ShowAllDebtPage({this.userId,  this.isUser});
 
   @override
   State<ShowAllDebtPage> createState() => _ShowAllDebtPageState();
@@ -20,17 +26,23 @@ class _ShowAllDebtPageState extends State<ShowAllDebtPage> {
   void initState() {
     super.initState();
     user = auth.currentUser;
-    searchStream = MyDataBase.getDebtRealTimeUpdate(user?.uid ?? "");
+    searchStream = MyDataBase.getDebtRealTimeUpdate(
+      widget.isUser == false ? user?.uid ?? "" : widget.userId ?? "${user?.uid}",
+    );
   }
 
   void handleSearch() {
     if (searchQuery.isNotEmpty) {
-      searchStream = MyDataBase.getDebtCollection(user?.uid ?? "")
+      searchStream = MyDataBase.getDebtCollection(
+        widget.isUser == false ? user?.uid ?? "" :widget.userId ?? "${user?.uid}",
+      )
           .where('clientName', isGreaterThanOrEqualTo: searchQuery)
           .where('clientName', isLessThanOrEqualTo: searchQuery + '\uf8ff')
           .snapshots();
     } else {
-      searchStream = MyDataBase.getDebtRealTimeUpdate(user?.uid ?? "");
+      searchStream = MyDataBase.getDebtRealTimeUpdate(
+        widget.isUser == false ? user?.uid ?? "" :widget.userId ?? "${user?.uid}",
+      );
     }
     setState(() {});
   }
@@ -43,7 +55,7 @@ class _ShowAllDebtPageState extends State<ShowAllDebtPage> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: SizedBox(
-              width: MediaQuery.of(context).size.width*.9,
+              width: MediaQuery.of(context).size.width * .9,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
@@ -123,7 +135,7 @@ class _ShowAllDebtPageState extends State<ShowAllDebtPage> {
                   );
                 }
                 var debtList =
-                snapshot.data?.docs.map((doc) => doc.data()).toList();
+                    snapshot.data?.docs.map((doc) => doc.data()).toList();
                 if (debtList?.isEmpty == true) {
                   return Center(
                     child: Text(

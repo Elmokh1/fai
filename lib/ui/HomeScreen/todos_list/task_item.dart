@@ -2,8 +2,9 @@ import 'package:fai/import.dart';
 
 class TaskItem extends StatefulWidget {
   Task task;
+  String? CustomerID;
 
-  TaskItem({super.key, required this.task});
+  TaskItem({super.key, required this.task, this.CustomerID});
 
   @override
   State<TaskItem> createState() => _TaskItemState();
@@ -66,58 +67,83 @@ class _TaskItemState extends State<TaskItem> {
                       child: widget.task.isDone == false
                           ? Image.asset("assets/images/Ic_check.png")
                           : Icon(
-                        Icons.not_interested_outlined,
-                        color: Colors.red,
-                      )),
+                              Icons.not_interested_outlined,
+                              color: Colors.red,
+                            )),
                 ),
               ),
+              widget.task.isDone == false
+                  ? Text(
+                      "",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: widget.task.isDone == false
+                            ? Colors.white
+                            : Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    )
+                  : StreamBuilder<QuerySnapshot<Report>>(
+                      builder: (context, snapshot) {
+                        var report = snapshot.data?.docs
+                            .map((doc) => doc.data())
+                            .toList();
+                        return report?[0].income == null
+                            ? Text("التحصيل:0  ")
+                            : Text("التحصيل:${report?[0].income}" ?? "0");
+                      },
+                      stream: MyDataBase.getReportRealTimeUpdate(
+                        widget.CustomerID ?? user?.uid ?? "",
+                        widget.task?.id ?? "",
+                      ),
+                    ),
               Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      widget.task.isDone == false
-                          ? Text(
-                        "${widget.task.title}",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: widget.task.isDone == false
-                              ? Colors.white
-                              : Colors.white,
-                          fontWeight: FontWeight.w700,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  widget.task.isDone == false
+                      ? Text(
+                          "${widget.task.title}",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: widget.task.isDone == false
+                                ? Colors.white
+                                : Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        )
+                      : Text(
+                          "${widget.task.title}",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: widget.task.isDone == false
+                                ? theme.primaryColor
+                                : Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
-                      )
-                          : Text(
-                        "${widget.task.title}",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: widget.task.isDone == false
-                              ? theme.primaryColor
-                              : Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      widget.task.isDone == false
-                          ? Text(
-                        "${widget.task.desc}",
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      )
-                          : Text(
-                        "${widget.task.desc}",
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      )
-                    ],
-                  )),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  widget.task.isDone == false
+                      ? Text(
+                          "${widget.task.desc}",
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        )
+                      : Text(
+                          "${widget.task.desc}",
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        )
+                ],
+              )),
               Container(
                 margin: const EdgeInsets.all(20),
                 height: 80,
@@ -131,8 +157,8 @@ class _TaskItemState extends State<TaskItem> {
     );
   }
 
-  void showReportModal( ) {
-     showModalBottomSheet(
+  void showReportModal() {
+    showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       builder: (context) {

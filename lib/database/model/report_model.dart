@@ -4,7 +4,7 @@ class Report {
   static const String collectionName = 'Report';
   String? id;
   String? report;
-  String? income;
+  double? income;
   double? lat;
   double? long;
   DateTime? dateTime;

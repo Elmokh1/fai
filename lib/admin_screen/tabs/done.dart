@@ -51,8 +51,8 @@ class _NotDoneState extends State<ReportDone> {
           InkWell(
             onLongPress: () async {
               setState(() {});
-              await MyDataBase.deleteTarget(widget.user!.id ??"");
-              await MyDataBase.deleteIncome(widget.user!.id ??"");
+              await MyDataBase.deleteTarget(widget.user!.id ?? "");
+              await MyDataBase.deleteIncome(widget.user!.id ?? "");
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -131,8 +131,8 @@ class _NotDoneState extends State<ReportDone> {
                                     if (incomeList != null &&
                                         incomeList.isNotEmpty) {
                                       totalIncome = incomeList
-                                          .map(
-                                              (income) => income.DailyInCome ?? 0)
+                                          .map((income) =>
+                                              income.DailyInCome ?? 0)
                                           .reduce((a, b) => a + b);
                                     }
 
@@ -151,8 +151,9 @@ class _NotDoneState extends State<ReportDone> {
                                       ),
                                     );
                                   },
-                                  stream: MyDataBase.getDailyIncomeRealTimeUpdate(
-                                    widget.user!.id ??"",
+                                  stream:
+                                      MyDataBase.getDailyIncomeRealTimeUpdate(
+                                    widget.user!.id ?? "",
                                     DateTime.fromMillisecondsSinceEpoch(
                                         MyDateUtils.dateOnly(selectedDate)
                                             .millisecondsSinceEpoch),
@@ -162,15 +163,12 @@ class _NotDoneState extends State<ReportDone> {
                             );
                           },
                           stream: MyDataBase.getIncomeRealTimeUpdate(
-                              widget.user!.id ??""
-                          ),
+                              widget.user!.id ?? ""),
                         );
                       },
                       stream: MyDataBase.getTargetRealTimeUpdate(
-                          widget.user!.id ??""
-                      ),
+                          widget.user!.id ?? ""),
                     ),
-
                   ],
                 ),
               ),
@@ -207,7 +205,10 @@ class _NotDoneState extends State<ReportDone> {
                       return SizedBox.shrink();
                     } else {
                       return InkWell(
-                        child: TaskItem(task: task),
+                        child: TaskItem(
+                          task: task,
+                          CustomerID: widget.user.id,
+                        ),
                         onTap: () {
                           Navigator.push(
                             context,

@@ -25,7 +25,7 @@ class ClientDebtDetailsWidget extends StatelessWidget {
                     child: Text(
                       ' ${DateFormat('yyyy-MM-dd').format(clientInvoice.dateTime!)}',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 10,
                         color: clientInvoice.isInvoice == true
                             ? Colors.green
                             : Colors.red,
@@ -51,6 +51,25 @@ class ClientDebtDetailsWidget extends StatelessWidget {
                       color: clientInvoice.isInvoice == true
                           ? Colors.green
                           : Colors.red,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: VerticalDivider(),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 5.0),
+                  child: Text(
+                    "${clientInvoice.newDebt}",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
                     ),
                   ),
                 ),

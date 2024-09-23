@@ -187,6 +187,7 @@ class _ReportModalState extends State<ReportModal> {
       lat: latitude ?? 0.0,
       report: ReportController.text,
       dateTime: selectedDate,
+      income: Dincome,
     );
 
     appProvider reportProvider =
@@ -198,6 +199,7 @@ class _ReportModalState extends State<ReportModal> {
       user?.uid ?? "",
       widget.task.id ?? "",
       report,
+
     );
     Income income = Income(
       DailyInCome: Dincome,

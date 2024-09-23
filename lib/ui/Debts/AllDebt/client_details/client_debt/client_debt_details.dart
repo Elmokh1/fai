@@ -74,6 +74,24 @@ class _ClientDebtDetailsState extends State<ClientDebtDetails> {
                     ),
                   ),
                 ),
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: VerticalDivider(),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 5.0),
+                    child: Text(
+                      "الرصيد",
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

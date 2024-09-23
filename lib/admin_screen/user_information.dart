@@ -3,6 +3,8 @@ import 'package:fai/database/model/customer_model.dart';
 import 'package:fai/import.dart';
 import 'package:fai/database/model/eng_model.dart' as MyUser;
 
+import '../ui/Debts/debts.dart';
+
 
 
 class UserInformation extends StatefulWidget {
@@ -21,6 +23,7 @@ class _UserInformationState extends State<UserInformation> {
   Widget build(BuildContext context) {
     var tabs = [
       NotDone(widget.user),
+      DebtManagementPage(userId: widget.user.id,isAdmin: true,),
       ReportDone(widget.user),
     ];
     return Scaffold(
@@ -60,6 +63,12 @@ class _UserInformationState extends State<UserInformation> {
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.list,
+                size: 32,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.monetization_on_rounded,
                 size: 32,
               ),
               label: ''),

@@ -77,8 +77,7 @@ class MyDataBase {
     );
   }
 
-  static CollectionReference<Report> getReportCollection(
-      String uid, String tId) {
+  static CollectionReference<Report> getReportCollection(String uid, String tId) {
     return getTaskCollection(uid)
         .doc(tId)
         .collection(Report.collectionName)
@@ -119,6 +118,7 @@ class MyDataBase {
           toFirestore: (clientInvoiceModel, options) => clientInvoiceModel.toFireStore(),
         );
   }
+
 
   static CollectionReference<Target> getTargetCollection(String uid) {
     return getCustomerCollection()
